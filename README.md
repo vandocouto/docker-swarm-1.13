@@ -74,10 +74,10 @@ $ vim ansible/docker-swarm/hosts
 </pre>
 
 - [docker-engine] 	- deverá conter todos os ip's públicos da sáida output
-- [master] 		- deverá conter apenas um ip público da saída output
-- [manager] 		- deverá conter apenas um ip público da saída output
-- [worker] 		- deverá conter dois ip's públicos da saída output
-- [all:vars] 		- deverá conter um ip privado da saída output
+- [master] 		- deverá conter o primeiro ip (54.173.75.70) público da saída output
+- [manager] 		- deverá conter o segundo ip (52.3.251.179) público da saída output
+- [worker] 		- deverá conter o dois últimos ip's públicos (167.45.179 54.160.225.84) da saída output
+- [all:vars] 		- deverá conter o primeiro ip privado da (10.0.0.150) saída output
 
 <pre>
 [docker-engine]
