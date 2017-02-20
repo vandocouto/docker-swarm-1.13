@@ -1,0 +1,6 @@
+# Repositorio Dockere Engine
+# ubuntu 14
+#deb https://apt.dockerproject.org/repo ubuntu-trusty main
+# ubuntu 16
+deb https://apt.dockerproject.org/repo ubuntu-xenial main
+

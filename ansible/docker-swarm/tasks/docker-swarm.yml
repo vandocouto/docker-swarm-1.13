@@ -1,0 +1,66 @@
+- name: "Hosts"
+  hosts: 
+   - all
+  become: yes
+
+  pre_tasks:
+   - name: "Docker | install python-pip"
+     apt: name={{item}} state=present
+     with_items:
+     - python-pip
+   
+   - name: "Docker | install docker-py"
+     pip:
+      name: "docker-py"
+      state: present
+
+  tasks:
+
+   - name: "Docker | swarm create cluster [init]"
+     command: docker swarm init --listen-addr 0.0.0.0:{{ docker_swarm_port }} --advertise-addr {{ docker_swarm_addr }}
+     when: "'master' in group_names"
+     ignore_errors: yes
+
+   - name: "Docker | Creating Network Overlay"
+     command: docker network create --driver overlay --subnet {{ swarm_subnet }} {{ swarm_subnet_name }}
+     when: "'master' in group_names"
+     ignore_errors: yes
+
+   #- debug: var=group_names
+
+   - name: "Docker | swarm token [manager]"
+     command: docker swarm join-token -q manager
+     register: token
+     delegate_facts: True
+     delegate_to: "{{ groups['master'][0] }}"
+     when: "'manager' in group_names"
+     ignore_errors: yes
+
+   - name: "Docker | swarm add in cluster [manager]"
+     command: docker swarm join --token {{ token.stdout }} {{ docker_swarm_addr }}:{{ docker_swarm_port }}
+     when: "'manager' in group_names"
+     ignore_errors: yes
+
+   #- debug: var=token.stdout
+   #  when: "'manager' in group_names"
+
+   - name: "Docker | swarm token [worker]"
+     command: docker swarm join-token -q worker
+     register: token
+     delegate_facts: True
+     delegate_to: "{{ groups['master'][0] }}"
+     when: "'worker' in group_names"
+     ignore_errors: yes
+
+   - name: "Docker | swarm add in [worker]"
+     command: docker swarm join --token {{ token.stdout }} {{ docker_swarm_addr }}:{{ docker_swarm_port }}
+     when: "'worker' in group_names"  
+     ignore_errors: yes
+
+   - name: "Docker | install plugin Rexray - EBS"
+     shell: echo -n "y" | docker plugin install rexray/ebs
+     ignore_errors: yes
+     tags: rexray
+   
+   #- debug: var=token.stdout
+   #  when: "'worker' in group_names"
