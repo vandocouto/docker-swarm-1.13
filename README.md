@@ -64,8 +64,9 @@ $  ./terraform/deploy.sh terraform/default/ apply
 
 <pre>
 Outputs:
-Private IP = 10.0.0.111,10.0.3.97,10.0.1.31,10.0.2.153
-Public IP = 54.85.45.8,54.210.87.3,54.86.167.161,52.90.223.152
+
+Private IP = 10.0.0.150,10.0.3.68,10.0.1.32,10.0.2.24
+Public IP = 54.173.75.70,52.3.251.179,54.167.45.179,54.160.225.84
 </pre>
 
 <pre>
@@ -80,20 +81,20 @@ $ vim ansible/docker-swarm/hosts
 
 <pre>
 [docker-engine]
-54.85.45.8
-54.210.87.3
-54.86.167.161
-52.90.223.152
+54.173.75.70
+52.3.251.179
+54.167.45.179
+54.160.225.84
 
 [master]
-54.85.45.8
+54.173.75.70
 
 [manager]
-54.210.87.3
+52.3.251.179
 
 [worker]
-54.86.167.161
-52.90.223.152
+54.167.45.179
+54.160.225.84
 
 [all:children]
 docker-engine
@@ -102,7 +103,7 @@ worker
 manager
 
 [all:vars]
-docker_swarm_addr=10.0.0.111
+docker_swarm_addr=10.0.0.150
 docker_swarm_port=2377
 swarm_subnet=10.0.0.0/24
 swarm_subnet_name=network_swarm
@@ -113,6 +114,6 @@ ansible_ssh_private_key_file=../../chave/docker-swarm.pem
 - Executando o playbook
 
 <pre>
-$ cd /ansible/docker-swarm
+$ cd ansible/docker-swarm
 $ ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts ./tasks/main.yml 
 </pre>
