@@ -1,4 +1,7 @@
-# Docker Swarm Ubuntu
+# Docker Swarm V1.13
+
+<hr>
+
 
 ## Clone do projeto
 
