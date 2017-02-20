@@ -20,6 +20,7 @@ $ git clone https://github.com/vandocouto/docker-swarm-1.13.git
 #### Ajustando o script de deploy
 
 - Abra o script
+
 <pre>
 $ vim terraform/deploy.sh
 </pre>
