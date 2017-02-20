@@ -117,3 +117,9 @@ ansible_ssh_private_key_file=../../chave/docker-swarm.pem
 $ cd ansible/docker-swarm
 $ ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts ./tasks/main.yml 
 </pre>
+
+## Encerrando o projeto
+
+<pre>
+$  ./terraform/deploy.sh terraform/default/ destroy
+</pre>
