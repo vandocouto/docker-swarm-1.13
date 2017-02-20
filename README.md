@@ -1,8 +1,5 @@
 # Docker Swarm V1.13
 
-<hr>
-
-
 ## Clone do projeto
 
 <pre>
