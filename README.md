@@ -3,7 +3,7 @@
 ## clone do projeto
 
 <pre>
-$ git clone 
+$ git clone https://github.com/vandocouto/docker-swarm-1.13.git
 </pre>
 
 ## Ajustes na AWS
