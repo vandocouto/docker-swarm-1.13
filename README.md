@@ -15,7 +15,7 @@ $ git clone https://github.com/vandocouto/docker-swarm-1.13.git
 - Mova a chave para o diretório "terraform/chave/"
 - Ajuste a permissão da chave para "chmod 0400 terraform/chave/docker-swarm.key"
 
-## Ajustando o Terraform
+## Ajustes no Terraform
 
 #### Ajustando o script de deploy
 
@@ -55,7 +55,7 @@ $  ./terraform/deploy.sh terraform/default/ plan
 $  ./terraform/deploy.sh terraform/default/ apply
 </pre>
 
-## Ajustando o Ansible
+## Ajustes no Ansible
 
 #### Arquivo hosts
 - Neste arquivo será adicionado os ip's das instâncias
