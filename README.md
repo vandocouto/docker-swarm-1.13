@@ -9,7 +9,7 @@ $ git clone https://github.com/vandocouto/docker-swarm-1.13.git
 ## Ajustes na AWS
 
 - Crie um usuário no "Your Security Credentials"
-- Crie um security group chamado "docker-swarm" (Allow All para a VPC)
+- Crie um security group chamado "docker-swarm" (All traffic para a VPC)
 - De permissão para o usuário no "EC2 full Access"
 - Crie uma chave (key) chamada "docker-swarm.key"
 - Mova a chave para o diretório "terraform/chave/"
