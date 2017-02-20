@@ -10,11 +10,38 @@ $ git clone
 
 - Crie um usuaŕio no "Your Security Credentials"
 - Crie um security group chamado "docker-swarm" 
-- Crie uma chave *.key chamada "docker-swarm.key"
+- De permissão para o usuário no "EC2 full Access"
+- Crie uma chave (key) chamada "docker-swarm.key"
 - Mova a chave para o diretório "terraform/chave/"
 - Ajuste a permissão da chave para "chmod 0400 terraform/chave/docker-swarm.key"
 
 ## Ajustando o Terraform
+
+#### Ajustando o script de deploy
+
+- Abra o script
+<pre>
+$ vim terraform/deploy.sh
+</pre>
+
+- Insira o Access Key ID do usuário
+- Insira o Secret Access Key do usuário
+
+<pre>
+if [ -z "$1" ]
+then
+  echo "Usage: must pass the terraform directory"
+  exit 1
+fi
+
+export AWS_ACCESS_KEY_ID="AKIAJPX66JYLXQMTCDKA"
+export AWS_SECRET_ACCESS_KEY="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"
+export AWS_DEFAULT_REGION="us-west-1"
+
+cd $1
+terraform $2
+</pre>
+
 
 - Executando o plan do projeto [ O comando terraform plan é usado para criar o plano de execução ]
 
