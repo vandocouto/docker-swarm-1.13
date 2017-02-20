@@ -109,7 +109,7 @@ ansible_ssh_user=ubuntu
 ansible_ssh_private_key_file=../../chave/docker-swarm.pem
 </pre>
 
-
+- Executando o playbook
 <pre>
 $ cd /ansible/docker-swarm
 $ ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts ./tasks/main.yml 
