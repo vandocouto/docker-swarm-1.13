@@ -1,6 +1,6 @@
 # Docker Swarm Ubuntu
 
-## clone do projeto
+## Clone do projeto
 
 <pre>
 $ git clone https://github.com/vandocouto/docker-swarm-1.13.git
