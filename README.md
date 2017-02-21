@@ -76,7 +76,7 @@ $ vim ansible/docker-swarm/hosts
 - [docker-engine] 	- deverá conter todos os ip's públicos da sáida output
 - [master] 		- deverá conter o primeiro ip (54.173.75.70) público da saída output
 - [manager] 		- deverá conter o segundo ip (52.3.251.179) público da saída output
-- [worker] 		- deverá conter o dois últimos ip's públicos (167.45.179 54.160.225.84) da saída output
+- [worker] 		- deverá conter os dois últimos ip's públicos (167.45.179 54.160.225.84) da saída output
 - [all:vars] 		- deverá conter o primeiro ip privado (10.0.0.150) da saída output
 
 <pre>
@@ -117,6 +117,8 @@ ansible_ssh_private_key_file=../../chave/docker-swarm.pem
 $ cd ansible/docker-swarm
 $ ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts ./tasks/main.yml 
 </pre>
+
+- OBS: A versão do Ansible precisa ser > 2
 
 ## Encerrando o projeto
 
