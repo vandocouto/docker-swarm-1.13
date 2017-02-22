@@ -27,6 +27,7 @@ $ vim terraform/deploy.sh
 
 - Insira o Access Key ID do usuário
 - Insira o Secret Access Key do usuário
+- Ajuste as variávies de acordo com o seu ambiente terraform/default/variables.tf 
 
 <pre>
 if [ -z "$1" ]
