@@ -5,10 +5,10 @@
 
   tasks:
 
-   - name: Set hostname
+   - name: "Docker | Set hostname"
      hostname: name={{ hostname }}
 
-   - name: teste
+   - name: "Docker | Set Hosts"
      lineinfile:
       dest: /etc/hosts
       regexp: '^127\.0\.0\.1'
