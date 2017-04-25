@@ -1,18 +1,21 @@
+# zone
 provider "aws" {
-	region = "us-east-1"
+	region = "${var.region}"
 }
 
+# deploy
 resource "aws_instance" "docker-swarm" {
  	count = "${var.instance}"
-        subnet_id = "${element(var.subnet, count.index)}"
+	subnet_id = "${element(var.subnet, count.index)}"
 	instance_type = "${var.type}"
 	ami = "${var.ami}"
 	key_name = "${var.key}"
   	security_groups = ["${var.security}"]
 	associate_public_ip_address = true
+
 	root_block_device {
-        	volume_size = 50
-    	}
+        	volume_size = "${var.size}"
+    }
 
 	provisioner "remote-exec" {
 		connection {
@@ -21,12 +24,14 @@ resource "aws_instance" "docker-swarm" {
     		}
 
 		inline = [
-      			"sudo apt-get update -y",
-			"sudo apt-get install python-simplejson -y"
+			"sudo apt-get update -y",
+			"sudo apt-get install python-simplejson -y",
     		]
 	}
 
 }
+
+# output
 output "Private IP" {
 	value = "${join(",", aws_instance.docker-swarm.*.private_ip)}"
  

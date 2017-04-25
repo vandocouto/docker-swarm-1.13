@@ -1,9 +1,17 @@
+variable "region" {
+	default = "us-east-1"
+}
+
 variable "instance" {
 	default = 4
 }
 
+variable "size" {
+	default = 70
+}
+
 variable "type" {
-	default = "t2.micro"
+	default = "t2.medium"
 }
 
 variable "ami" {
@@ -15,7 +23,7 @@ variable "key" {
 }
 
 variable "security" {
-	default = "sg-fd653a81"
+	default = "sg-68600514"
 }
 
 variable "subnet" {
