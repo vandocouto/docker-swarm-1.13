@@ -14,18 +14,11 @@
      register: aptget
 
    - name: "Docker | key"
-     command: apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+     apt_key: keyserver=hkp://p80.pool.sks-keyservers.net:80 id=58118E89F3A912897C070ADBF76221572C52609D state=present
 
-   - name: "Docker | Create file docker.list Ubuntu 16"
-     template: src=temp-docker.list-16 dest=/etc/apt/sources.list.d/docker.list owner=root mode=644 backup=yes
-     register: repositorio
-     when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == "16.04"
+   - name: "Docker | Add docker apt repository"
+     apt_repository: repo="deb https://apt.dockerproject.org/repo {{ ansible_distribution|lower }}-{{ ansible_distribution_release }} main" state=present
 
-   - name: "Docker | Create file docker.list Ubuntu 14"
-     template: src=temp-docker.list-14 dest=/etc/apt/sources.list.d/docker.list owner=root mode=644 backup=yes
-     register: repositorio
-     when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == "14.04"
-  
    - name: "Docker | apt-get update"
      apt: update_cache=yes
 
@@ -37,6 +30,7 @@
      apt: name={{item}} state=present
      with_items:
      - linux-image-extra-virtual
+     ignore_errors: yes
 
    - name: "Docker | apt-get update"
      apt: update_cache=yes
@@ -45,7 +39,6 @@
      apt: name={{item}} state=present
      with_items:
      - docker-engine
-     when: repositorio|success
 
    - name: "Docker | Install docker-compose"
      shell: curl -L https://github.com/docker/compose/releases/download/1.10.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
@@ -58,6 +51,11 @@
    - name: "Docker | Enable Docker init.d"
      service: name=docker enabled=yes
      ignore_errors: yes
+
+   - name: "Docker | Create daemon.json"
+     template: src=../templates/temp-daemon.json dest=/etc/docker/daemon.json owner=root mode=644 backup=yes
+     register: daemon_json
+     when: aptget|success
 
    - name: "Docker | Restart Docker"
      service: name=docker state=restarted
@@ -76,3 +74,5 @@
    - name: "Docker | Install Rexray"
      shell: curl -sSL https://dl.bintray.com/emccode/rexray/install | sh -s -- stable
      ignore_errors: yes
+
+

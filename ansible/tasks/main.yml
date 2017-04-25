@@ -4,3 +4,5 @@
   tags: docker-engine
 - include: docker-swarm.yml
   tags: docker-swarm
+- include: hostname.yml
+  tags: hostname

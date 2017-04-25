@@ -27,7 +27,6 @@ $ vim terraform/deploy.sh
 
 - Insira o Access Key ID do usuário
 - Insira o Secret Access Key do usuário
-- Ajuste as variávies de acordo com o seu ambiente terraform/default/variables.tf 
 
 <pre>
 if [ -z "$1" ]
@@ -36,9 +35,8 @@ then
   exit 1
 fi
 
-export AWS_ACCESS_KEY_ID="AKIAJPX66JYLXQMTCDKA"
-export AWS_SECRET_ACCESS_KEY="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"
-export AWS_DEFAULT_REGION="us-west-1"
+export AWS_ACCESS_KEY_ID=""
+export AWS_SECRET_ACCESS_KEY=""
 
 cd $1
 terraform $2
@@ -66,8 +64,8 @@ $  ./terraform/deploy.sh terraform/default/ apply
 <pre>
 Outputs:
 
-Private IP = 10.0.0.150,10.0.3.68,10.0.1.32,10.0.2.24
-Public IP = 54.173.75.70,52.3.251.179,54.167.45.179,54.160.225.84
+Private IP = 10.0.0.134,10.0.3.231,10.0.1.14,10.0.2.150
+Public IP = 54.210.142.62,34.207.57.29,54.91.98.32,52.90.54.17
 </pre>
 
 <pre>
@@ -75,27 +73,27 @@ $ vim ansible/docker-swarm/hosts
 </pre>
 
 - [docker-engine] 	- deverá conter todos os ip's públicos da sáida output
-- [master] 		- deverá conter o primeiro ip (54.173.75.70) público da saída output
-- [manager] 		- deverá conter o segundo ip (52.3.251.179) público da saída output
-- [worker] 		- deverá conter os dois últimos ip's públicos (167.45.179 54.160.225.84) da saída output
-- [all:vars] 		- deverá conter o primeiro ip privado (10.0.0.150) da saída output
+- [master] 		    - deverá conter o primeiro ip (52.3.252.205) público da saída output
+- [manager] 		- deverá conter o segundo ip (107.23.179.233) público da saída output
+- [worker] 		    - deverá conter os dois últimos ip's públicos (54.172.39.123) da saída output
+- [all:vars] 		- deverá conter o primeiro ip privado (10.0.3.204) da saída output
 
 <pre>
 [docker-engine]
-54.173.75.70
-52.3.251.179
-54.167.45.179
-54.160.225.84
+54.210.142.62   hostname=master
+34.207.57.29    hostname=manager
+54.91.98.32     hostname=worker1
+52.90.54.17     hostname=worker2
 
 [master]
-54.173.75.70
+54.210.142.62
 
 [manager]
-52.3.251.179
+34.207.57.29
 
 [worker]
-54.167.45.179
-54.160.225.84
+54.91.98.32
+52.90.54.17
 
 [all:children]
 docker-engine
@@ -104,18 +102,19 @@ worker
 manager
 
 [all:vars]
-docker_swarm_addr=10.0.0.150
+docker_swarm_addr=10.0.0.134
 docker_swarm_port=2377
-swarm_subnet=10.0.0.0/24
+swarm_subnet=192.168.0.0/24
 swarm_subnet_name=network_swarm
 ansible_ssh_user=ubuntu
-ansible_ssh_private_key_file=../../chave/docker-swarm.pem
+ansible_ssh_private_key_file=../chave/docker-swarm.pem
+hostname_default_ip=127.0.0.1
 </pre>
 
 - Executando o playbook
 
 <pre>
-$ cd ansible/docker-swarm
+$ cd ansible/
 $ ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts ./tasks/main.yml 
 </pre>
 

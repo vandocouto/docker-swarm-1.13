@@ -1,0 +1,19 @@
+- name: "Hosts"
+  hosts:
+   - all
+  become: yes
+
+  tasks:
+
+   - name: Set hostname
+     hostname: name={{ hostname }}
+
+   - name: teste
+     lineinfile:
+      dest: /etc/hosts
+      regexp: '^127\.0\.0\.1'
+      line: '127.0.0.1 localhost {{ hostname }}'
+      owner: root
+      group: root
+      mode: 0644
+

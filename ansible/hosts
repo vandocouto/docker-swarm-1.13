@@ -1,0 +1,30 @@
+[docker-engine]
+54.210.142.62	hostname=master
+34.207.57.29	hostname=manager
+54.91.98.32	hostname=worker1
+52.90.54.17	hostname=worker2
+
+[master]
+54.210.142.62
+
+[manager]
+34.207.57.29
+
+[worker]
+54.91.98.32
+52.90.54.17
+
+[all:children]
+docker-engine
+master
+worker
+manager
+
+[all:vars]
+docker_swarm_addr=10.0.0.134
+docker_swarm_port=2377
+swarm_subnet=192.168.0.0/24
+swarm_subnet_name=network_swarm
+ansible_ssh_user=ubuntu
+ansible_ssh_private_key_file=../chave/docker-swarm.pem
+hostname_default_ip=127.0.0.1
